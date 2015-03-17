@@ -22,6 +22,58 @@ n = 0
 def ver():
     print 'ver 0.1.3.6.1'
 
+def prog():  # тело программы
+    text = lang()
+    enter_num(text)
+
+def enter_num(text):  # функция ввода X и Y
+    test = ['+', '/', '*', '-', '^']
+    print text[1]
+    func = raw_input()
+    func = func.split()
+    if len(func) >= 3:
+        x = float(func[0])
+        y = float(func[2])
+        oper = func[1]
+        if y == 0 or x >= 4294967296 or y >= 4294967296:
+            error(text)
+        else:
+            if oper in test:
+                prog_calc(x, y, text, oper, func)
+            else:
+                error(text)
+    else:
+        error(text)
+        
+def prog_calc(x, y, text, oper, func):  # функция калькулятора
+    #calc(x, y, text, oper)
+    n = 0
+    calc_long(func, text, oper, n, x, y, ans)
+    exit(text)
+    
+"""Какой-то индусский код"""
+def calc_long(func, text, oper, n, x, y, ans): #функция длинных выражений
+    if (oper == "+"):
+        ans = x + y
+    elif oper == "-":
+        ans = x - y
+    elif oper == "*":
+        ans = x * y
+    elif oper == "/":
+        ans = x / y
+    elif oper == "^":
+        ans = x**y
+    else:
+        error(text)
+    if y <= len(func):
+        n = n + 2
+        y = float(func[n + 2])
+        oper = func[n + 2]
+        x = ans
+        calc_long(func, text, oper, n, x, y, ans)
+    else:
+        print text[5], ans
+    
 
 def lang():  # функция выбора языка
     """Английский массив"""
@@ -78,53 +130,6 @@ def calc(x, y, text, oper):  # функция коротких выражени�
 def brackets (func):
     pass
 
-
-"""Какой-то индусский код"""
-def calc_long(func, text, oper, n, x, y, ans): #функция длинных выражений
-    if y <= len(func):
-        y = float(func[n + 2])
-        oper = func[n + 1]
-        if (oper == "+"):
-            ans = x + y
-        elif oper == "-":
-            ans = x - y
-        elif oper == "*":
-            ans = x * y
-        elif oper == "/":
-            ans = x / y
-        elif oper == "^":
-            ans = x**y
-        else:
-            error(text)
-        n = n + 2
-        x = ans
-        calc_long(func, text, oper, n, x, y, ans)
-    else:
-        print text[5], ans
-
-
-
-
-def enter_num(text):  # функция ввода X и Y
-    test = ['+', '/', '*', '-', '^']
-    print text[1]
-    func = raw_input()
-    func = func.split()
-    if len(func) >= 3:
-        x = float(func[0])
-        y = float(func[2])
-        oper = func[1]
-        if y == 0 or x >= 4294967296 or y >= 4294967296:
-            error(text)
-        else:
-            if oper in test:
-                prog_calc(x, y, text, oper, func)
-            else:
-                error(text)
-    else:
-        error(text)
-
-
 def error(text):  # функция вывода ошибки
     print text[4], text[6]
     err = input()
@@ -144,17 +149,6 @@ def exit(text):  # функция выхода
     elif exi == 1:
         pass
 
-
-def prog_calc(x, y, text, oper, func):  # функция калькулятора
-    #calc(x, y, text, oper)
-    ans = 0
-    calc_long(func, text, oper, n, x, y, ans)
-    exit(text)
-
-
-def prog():  # тело программы
-    text = lang()
-    enter_num(text)
 
 
 """Конец описания функций"""
